@@ -8,10 +8,12 @@ use Weijiajia\HttpProxyManager\Contracts\DynamicInterface;
 use Weijiajia\HttpProxyManager\Data\Proxy;
 use Illuminate\Support\Collection;
 use Saloon\Http\Request;
-
+use Weijiajia\SaloonphpLogsPlugin\HasLogger;
 
 abstract class ProxyConnector extends Connector
 {
+    use HasLogger;
+    
     public function __construct(protected ProxyRequest $request)
     {
         $this->request = $request;
