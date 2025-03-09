@@ -26,6 +26,15 @@ class ProxyManager extends Manager
         return $this->config->get('http-proxy-manager.default');
     }
 
+        /**
+     * @param $driver
+     * @return ProxyConnector
+     */
+    public function driver($driver = null):ProxyConnector
+    {
+        return parent::driver($driver);
+    }
+
     /**
      * 创建指定驱动的实例
      *

@@ -64,7 +64,7 @@ class AccountPassword extends ProxyRequest implements AccountPasswordInterface
         return Proxy::from([
             'host' => $data['host'] ?? null,
             'port' => $data['port'] ?? null,
-            'user' => $data['username'] ?? null,
+            'username' => $data['username'] ?? null,
             'password' => $data['password'] ?? null,
             'url' => $data['url'] ?? null,
         ]);
