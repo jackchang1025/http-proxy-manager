@@ -58,11 +58,7 @@ class Residential extends Data
         }
     }
 
-    protected function generateSessionId(): string
-    {
-        // 生成8位随机字符串作为会话ID
-        return substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 8);
-    }
+
 
     public function toArray(): array
     {

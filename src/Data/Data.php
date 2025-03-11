@@ -23,4 +23,10 @@ abstract class Data implements WithResponse
         return new static(...$data);
     }
 
+    protected function generateSessionId(int $length = 8): string
+    {
+        // 生成8位随机字符串作为会话ID
+        return substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, $length);
+    }
+
 }

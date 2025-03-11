@@ -21,10 +21,6 @@ class ProxyManagerServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(ProxyManagerService::class, function () {
-
-           return $this->app->make(ProxyManager::class)->driver();
-        });
     }
 
 
