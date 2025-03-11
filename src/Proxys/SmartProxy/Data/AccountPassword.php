@@ -26,17 +26,17 @@ class AccountPassword extends Data
         //是否启用粘性会话
         public bool $sticky_session = false,
         //会话ID
-        public string $session = '',
+        public ?string $session = null,
         //保持ip使用的时间,单位分钟，最小1,最大24*60
         public int $life = 1,
         //全球地区code 例如：美国 area-US点击查看
-        public string $area = '',
+        public ?string $area = null,
         //所属城市 例如：纽约 city-newyork点击查看
-        public string $city = '',
+        public ?string $city = null,
         //州代码 例如：纽约 state-Newyork点击查看
-        public string $state = '',
+        public ?string $state = null,
         //指定数据中心地址
-        public string $ip = '',
+        public ?string $ip = null,
     ) {
         if ($this->sticky_session) {
             $this->session ??= $this->generateSessionId();
