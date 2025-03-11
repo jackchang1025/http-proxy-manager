@@ -46,10 +46,6 @@ class AccountPassword extends Data
     public function toArray(): array
     {
         return [
-            'username' => $this->username,
-            'password' => $this->password,
-            'host' => $this->host,
-            'port' => $this->port,
             'session' => $this->session,
             'life' => $this->life,
             'area' => $this->area,
