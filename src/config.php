@@ -124,6 +124,7 @@ return [
                         'skip_isp_static'  => false,
                         'skip_ips_list'    => null,
                         'endpoint'         => 'geo.iproyal.com',
+                        'forcerandom'      => 1,
                     ],
                 ],
             ],

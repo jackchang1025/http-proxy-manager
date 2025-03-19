@@ -90,6 +90,7 @@ class Residential extends ProxyRequest implements AccountPasswordInterface
             'streaming'     => $this->data->streaming,
             'skipispstatic' => $this->data->skipispstatic,
             'skipipslist'   => $this->data->skipipslist,
+            'forcerandom'   => $this->data->forcerandom,
         ];
 
         // 过滤掉空值

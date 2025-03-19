@@ -46,6 +46,9 @@ class Residential extends Data
         public ?string $session = null,
         //_lifetime-键指示路由器会话保持有效的持续时间。最短持续时间设置为1 秒，最长为7 天。这里的格式非常重要：只能指定一个时间单位。此参数在定义粘性会话的运行跨度、平衡会话稳定性和安全性需求方面起着关键作用。
         public ?string $lifetime = null,
+
+        //强制随机
+        public ?int $forcerandom = 1,
     ) {
 
         if ($this->sticky_session) {
