@@ -9,8 +9,9 @@ use Weijiajia\HttpProxyManager\Data\Proxy;
 use Illuminate\Support\Collection;
 use Saloon\Http\Request;
 use Weijiajia\SaloonphpLogsPlugin\HasLogger;
+use Weijiajia\SaloonphpLogsPlugin\Contracts\HasLoggerInterface;
 
-abstract class ProxyConnector extends Connector
+abstract class ProxyConnector extends Connector implements HasLoggerInterface
 {
     use HasLogger;
     
