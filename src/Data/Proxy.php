@@ -2,16 +2,17 @@
 
 namespace Weijiajia\HttpProxyManager\Data;
 
+use DateTime;
 use Weijiajia\HttpProxyManager\Contracts\ProxyInterface;
 use DateTimeInterface;
 
-class Proxy extends Data implements ProxyInterface
+class Proxy implements ProxyInterface
 {
 
     public function __construct(
         protected string $host,
         protected int $port,
-        protected string $type = 'http',
+        protected string $protocol = 'http',
         protected ?string $username = null,
         protected ?string $password = null,
         protected ?string $url = null,
@@ -25,7 +26,7 @@ class Proxy extends Data implements ProxyInterface
         return [
             'host' => $this->host,
             'port' => $this->port,
-            'type' => $this->type,
+            'protocol' => $this->protocol,
             'username' => $this->username,
             'password' => $this->password,
             'expiresAt' => $this->expiresAt,
@@ -33,6 +34,10 @@ class Proxy extends Data implements ProxyInterface
         ];
     }
 
+    public static function from(array $data): static
+    {
+        return new static(...$data);
+    }
     public function getHost(): string
     {
         return $this->host;
@@ -43,9 +48,9 @@ class Proxy extends Data implements ProxyInterface
         return $this->port;
     }
 
-    public function getType(): string
+    public function getProtocol(): string
     {
-        return $this->type;
+        return $this->protocol;
     }
 
     public function getUsername(): ?string
@@ -74,7 +79,33 @@ class Proxy extends Data implements ProxyInterface
             return true;
         }
 
-        return $this->expiresAt > new \DateTime();
+        return $this->expiresAt > new DateTime();
+    }
+
+    /**
+     * 设置过期时间
+     */
+    public function setExpiresAt(?DateTimeInterface $expiresAt): self
+    {
+        $this->expiresAt = $expiresAt;
+        return $this;
+    }
+
+    /**
+     * 设置元数据
+     */
+    public function setMetadata(array $metadata): self
+    {
+        $this->metadata = $metadata;
+        return $this;
+    }
+
+    /**
+     * 获取元数据
+     */
+    public function getMetadata(): array
+    {
+        return $this->metadata;
     }
 
 }

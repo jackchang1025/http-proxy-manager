@@ -68,11 +68,11 @@ return [
     'providers' => [
         'huashengdaili' => [
             'default_mode' => 'dynamic',
-            'connector' => \Weijiajia\HttpProxyManager\Proxys\HuaSheng\HuaShengConnector::class,
+            'connector' => \Weijiajia\HttpProxyManager\Drivers\HuaSheng\HuaShengConnector::class,
             'mode'      => [
                 'dynamic' => [
-                    'request' => \Weijiajia\HttpProxyManager\Proxys\HuaSheng\Request\Dynamic::class,
-                    'dto'     => \Weijiajia\HttpProxyManager\Proxys\HuaSheng\Data\Dynamic::class,
+                    'request' => \Weijiajia\HttpProxyManager\Drivers\HuaSheng\Request\Dynamic::class,
+                    'dto'     => \Weijiajia\HttpProxyManager\Drivers\HuaSheng\Data\Dynamic::class,
                     'default_config' => [
                         // 默认配置项...
                     ],
@@ -133,9 +133,9 @@ echo $proxy->getProtocol(); // 代理协议
 ### 使用花生代理连接器
 
 ```php
-use Weijiajia\HttpProxyManager\Proxys\HuaSheng\HuaShengConnector;
-use Weijiajia\HttpProxyManager\Proxys\HuaSheng\Request\Dynamic;
-use Weijiajia\HttpProxyManager\Proxys\HuaSheng\Data\Dynamic as DynamicData;
+use Weijiajia\HttpProxyManager\Drivers\HuaSheng\HuaShengConnector;
+use Weijiajia\HttpProxyManager\Drivers\HuaSheng\Request\Dynamic;
+use Weijiajia\HttpProxyManager\Drivers\HuaSheng\Data\Dynamic as DynamicData;
 
 // 创建数据对象
 $data = new DynamicData([
@@ -165,9 +165,9 @@ foreach ($proxies as $proxy) {
 ### 使用 IP Royal 账号密码认证代理
 
 ```php
-use Weijiajia\HttpProxyManager\Proxys\IpRoyal\IpRoyalConnector;
-use Weijiajia\HttpProxyManager\Proxys\IpRoyal\Request\Residential;
-use Weijiajia\HttpProxyManager\Proxys\IpRoyal\Data\Residential as ResidentialData;
+use Weijiajia\HttpProxyManager\Drivers\IpRoyal\IpRoyalConnector;
+use Weijiajia\HttpProxyManager\Drivers\IpRoyal\Request\Residential;
+use Weijiajia\HttpProxyManager\Drivers\IpRoyal\Data\Residential as ResidentialData;
 
 // 创建数据对象
 $data = new ResidentialData([

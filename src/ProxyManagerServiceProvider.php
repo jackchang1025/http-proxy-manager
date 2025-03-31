@@ -3,7 +3,6 @@
 namespace Weijiajia\HttpProxyManager;
 
 use Illuminate\Support\ServiceProvider;
-use Weijiajia\HttpProxyManager\ProxyManager;
 
 class ProxyManagerServiceProvider extends ServiceProvider
 {
@@ -21,6 +20,7 @@ class ProxyManagerServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+       
     }
 
 
@@ -38,11 +38,5 @@ class ProxyManagerServiceProvider extends ServiceProvider
     
         $this->mergeConfigFrom($configPath, 'http-proxy-manager');
     }
-    /**
-     * Get the services provided by the provider.
-     */
-    public function provides(): array
-    {
-        return [];
-    }
+  
 }

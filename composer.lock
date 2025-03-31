@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e5cf40cc41dec360742b570873943850",
+    "content-hash": "b3fff2c4a8f29b68f5b5c1d89f735815",
     "packages": [
         {
             "name": "brick/math",
@@ -5665,16 +5665,16 @@
         },
         {
             "name": "weijiajia/saloonphp-logs-plugin",
-            "version": "0.0.6",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jackchang1025/saloonphp-logs-plugin.git",
-                "reference": "0532ea538e1eb1be2ff71c5325b1c00032240d70"
+                "reference": "b341c8a87bedffbb358caf571bdab2d15847f7f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jackchang1025/saloonphp-logs-plugin/zipball/0532ea538e1eb1be2ff71c5325b1c00032240d70",
-                "reference": "0532ea538e1eb1be2ff71c5325b1c00032240d70",
+                "url": "https://api.github.com/repos/jackchang1025/saloonphp-logs-plugin/zipball/b341c8a87bedffbb358caf571bdab2d15847f7f1",
+                "reference": "b341c8a87bedffbb358caf571bdab2d15847f7f1",
                 "shasum": ""
             },
             "require": {
@@ -5682,6 +5682,7 @@
                 "psr/log": "^3.0",
                 "saloonphp/saloon": "^3.0"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -5706,9 +5707,9 @@
             ],
             "support": {
                 "issues": "https://github.com/jackchang1025/saloonphp-logs-plugin/issues",
-                "source": "https://github.com/jackchang1025/saloonphp-logs-plugin/tree/0.0.6"
+                "source": "https://github.com/jackchang1025/saloonphp-logs-plugin/tree/main"
             },
-            "time": "2025-02-28T09:11:28+00:00"
+            "time": "2025-03-21T10:37:02+00:00"
         }
     ],
     "packages-dev": [
@@ -9568,6 +9569,6 @@
     "platform": {
         "php": "^8.1"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.2.0"
 }

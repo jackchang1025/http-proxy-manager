@@ -16,7 +16,7 @@ interface ProxyInterface
      *
      * @return string
      */
-    public function getType(): string;
+    public function getProtocol(): string;
 
     /**
      * 获取代理完整地址 (例如: http://ip:port)

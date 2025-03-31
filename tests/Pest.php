@@ -7,11 +7,12 @@
 |
 | The closure you provide to your test functions is always bound to a specific PHPUnit test
 | case class. By default, that class is "PHPUnit\Framework\TestCase". Of course, you may
-| need to change it using the "pest()" function to bind a different classes or traits.
+| need to change it using the "uses()" function to bind a different classes or traits.
 |
 */
 
-// pest()->extends(Tests\TestCase::class);
+// 使用Orchestra TestCase作为基础测试类 
+uses(Orchestra\Testbench\TestCase::class)->in('Feature');
 
 /*
 |--------------------------------------------------------------------------
@@ -42,25 +43,71 @@ expect()->extend('toBeOne', function () {
 /**
  * 创建用于测试的代理实例
  */
-function makeProxy(array $overrides = [])
+// 设置测试辅助函数
+function makeProxy(array $attributes = []): Weijiajia\HttpProxyManager\Data\Proxy
 {
     $defaults = [
         'host' => '192.168.1.1',
         'port' => 8080,
-        'type' => 'http',
+        'protocol' => 'http',
         'username' => null,
         'password' => null,
-        'expiresAt' => null
+        'url' => null,
+        'expiresAt' => null,
+        'metadata' => []
     ];
 
-    $data = array_merge($defaults, $overrides);
-    
-    return new \Weijiajia\HttpProxyManager\Data\Proxy(
-        host: $data['host'],
-        port: $data['port'],
-        type: $data['type'],
-        username: $data['username'],
-        password: $data['password'],
-        expiresAt: $data['expiresAt']
+    $data = array_merge($defaults, $attributes);
+
+    return new Weijiajia\HttpProxyManager\Data\Proxy(
+        $data['host'],
+        $data['port'],
+        $data['protocol'],
+        $data['username'],
+        $data['password'],
+        $data['url'],
+        $data['expiresAt'],
+        $data['metadata']
     );
+}
+/**
+ * 获取测试的包服务提供者
+ */
+function getPackageProviders($app)
+{
+    return [
+        \Weijiajia\HttpProxyManager\ProxyManagerServiceProvider::class,
+    ];
+}
+
+/**
+ * 定义环境变量
+ */
+function defineEnvironment($app)
+{
+    // 设置配置
+    $app['config']->set('http-proxy-manager.default', 'huashengdaili');
+    
+    // 设置华盛代理配置
+    $app['config']->set('http-proxy-manager.drivers.huashengdaili', [
+        'mode' => 'extract_ip',
+        'extract_ip' => [
+            'session' => 'test-session',
+            'time' => 5,
+            'count' => 1,
+            'type' => 'json',
+        ],
+    ]);
+    
+    // 设置IpRoyal配置
+    $app['config']->set('http-proxy-manager.drivers.iproyal', [
+        'mode' => 'direct_connection_ip',
+        'direct_connection_ip' => [
+            'username' => 'test-user',
+            'password' => 'test-pass',
+            'host' => 'geo.iproyal.com',
+            'port' => 12321,
+            'protocol' => 'http',
+        ],
+    ]);
 }
