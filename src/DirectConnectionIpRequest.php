@@ -159,9 +159,9 @@ abstract class DirectConnectionIpRequest extends Request
 
     public function generateString(array $options,array|string $separator = "_"): string
     {
-        $options = Arr::except($this->options, ['username', 'password', 'host', 'port', 'protocol']);
+        $options = Arr::except($options, ['username', 'password', 'host', 'port', 'protocol']);
 
-        $options = array_filter($options, fn($value) => !is_null($value));
+        $options = array_filter($options, fn($value) => !is_null($value) && $value !== false && !empty($value));
 
         if(empty($options)){
             return '';
