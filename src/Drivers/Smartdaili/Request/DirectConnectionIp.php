@@ -18,7 +18,7 @@ class DirectConnectionIp extends DirectConnectionIpRequest
 
             if(empty($this->options['session']) || !$this->options['session']){
                 $this->options['session'] = $this->generateSessionId();
-                $this->options['sessionduration '] ??= 10;
+                $this->options['sessionduration'] ??= 10;
             }
         }
     }
