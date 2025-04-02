@@ -120,12 +120,25 @@ return [
                 //主机
                 'host'             => 'geo.iproyal.com',
                 //端口
-                'port'             => 443,
+                'port'             => null,
             ],
         ],
         'smartdaili' => [
-            'mode' => 'extract_ip',
-            'extract_ip' => [],
+            'mode' => 'direct_connection_ip',
+            'direct_connection_ip' => [
+                'username' => null,
+                'password' => null,
+                'session' => null,
+                'sticky_session' => false,
+                'life' => 10,
+                'country' => null,
+                'city' => null,
+                'state' => null,
+                'ip' => null,
+                'protocol' => 'http',
+                'host' => 'gate.visitxiangtan.com',
+                'port' => 7000,
+            ],
         ],
         'smartproxy' => [
             'mode' => 'extract_ip',
@@ -170,6 +183,9 @@ return [
                 'state' => null,
                 //指定数据中心地址
                 'ip' => null,
+                'protocol' => 'http',
+                'host' => null,
+                'port' => 1000,
             ],
         ],
         'proxyscrape' => [

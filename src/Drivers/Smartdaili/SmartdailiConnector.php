@@ -28,5 +28,11 @@ class SmartdailiConnector extends ProxyConnector
     {
         return DirectConnectionIp::class;
     }
+
+    public function withLifetime(int|string $lifetime): ProxyConnector
+    {
+        $this->config->add('sessionduration', $lifetime);
+        return $this;
+    }
     
 }
