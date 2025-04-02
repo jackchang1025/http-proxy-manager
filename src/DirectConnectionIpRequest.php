@@ -161,7 +161,7 @@ abstract class DirectConnectionIpRequest extends Request
     {
         $options = Arr::except($options, ['username', 'password', 'host', 'port', 'protocol']);
 
-        $options = array_filter($options, fn($value) => !is_null($value) && $value !== false && !empty($value));
+        $options = array_filter($options, fn($value) => !is_null($value) && $value !== false && $value !== '');
 
         if(empty($options)){
             return '';

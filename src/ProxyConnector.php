@@ -11,11 +11,13 @@ use Weijiajia\SaloonphpLogsPlugin\HasLogger;
 use Weijiajia\SaloonphpLogsPlugin\Contracts\HasLoggerInterface;
 use Weijiajia\HttpProxyManager\Exception\ProxyModelNotFoundException;
 use Weijiajia\HttpProxyManager\Exception\ProxyException;
+use Weijiajia\HttpProxyManager\Trait\HasOptions;
 
 abstract class ProxyConnector extends Connector implements HasLoggerInterface
 {
     use HasLogger;
-   
+    use HasOptions;
+    
     public ?int $tries = 3;
 
     protected ArrayStoreContract $config;
@@ -88,9 +90,7 @@ abstract class ProxyConnector extends Connector implements HasLoggerInterface
         throw new ProxyModelNotFoundException('Invalid mode: ' . $this->config->get('mode'));
     }
 
-    
     abstract protected function getExtractIpRequestClass(): ?string;
 
-   
     abstract protected function getDirectConnectionIpRequestClass(): ?string;
 }

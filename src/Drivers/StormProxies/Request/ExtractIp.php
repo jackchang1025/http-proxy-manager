@@ -1,6 +1,6 @@
 <?php
 
-namespace Weijiajia\HttpProxyManager\Drivers\Storm\Request;
+namespace Weijiajia\HttpProxyManager\Drivers\StormProxies\Request;
 
 use Illuminate\Support\Collection;
 use Saloon\Enums\Method;

@@ -35,8 +35,13 @@ return [
         'stormproxies' => [
             'mode' => 'extract_ip',
             'direct_connection_ip'    => [
+                'username' => null,
+                'password' => null,
+                'protocol' => 'http',
+                'host' => 'proxy.stormip.cn',
+                'port' => 1000,
                 'session' => null,
-                'life'    => 1,
+                'life'    => null,
                 'area'    => null,
                 'city'    => null,
                 'state'   => null,

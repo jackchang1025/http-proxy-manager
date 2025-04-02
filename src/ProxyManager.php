@@ -4,7 +4,7 @@ namespace Weijiajia\HttpProxyManager;
 
 use Illuminate\Support\Manager;
 use Weijiajia\HttpProxyManager\Drivers\HuaSheng\HuaShengConnector;
-use Weijiajia\HttpProxyManager\Drivers\Storm\StormConnector;
+use Weijiajia\HttpProxyManager\Drivers\StormProxies\StormProxiesConnector;
 use Weijiajia\HttpProxyManager\Drivers\Wandou\WandouConnector;
 use Weijiajia\HttpProxyManager\Drivers\IpRoyal\IpRoyalConnector;
 use Weijiajia\HttpProxyManager\Drivers\Smartdaili\SmartdailiConnector;
@@ -59,7 +59,7 @@ class ProxyManager extends Manager
      */
     protected function createStormproxiesDriver(): ProxyConnector
     {
-        return $this->createConnector(StormConnector::class, 'stormproxies');
+        return $this->createConnector(StormProxiesConnector::class, 'stormproxies');
     }
 
     /**

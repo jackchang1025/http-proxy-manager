@@ -1,19 +1,22 @@
 <?php
 
-namespace Weijiajia\HttpProxyManager\Drivers\SmartProxy;
+namespace Weijiajia\HttpProxyManager\Drivers\StormProxies;
 
 use Weijiajia\HttpProxyManager\ProxyConnector;
 use Saloon\Traits\Plugins\AcceptsJson;
-use Weijiajia\HttpProxyManager\Drivers\SmartProxy\Request\ExtractIp;
-use Weijiajia\HttpProxyManager\Drivers\SmartProxy\Request\DirectConnectionIp;
+use Weijiajia\HttpProxyManager\Drivers\StormProxies\Request\ExtractIp;
+use Weijiajia\HttpProxyManager\Drivers\StormProxies\Request\DirectConnectionIp;
 
-class SmartProxyConnector extends ProxyConnector
+class StormProxiesConnector extends ProxyConnector
 {
     use AcceptsJson;
 
+    /**
+     * The Base URL of the API.
+     */
     public function resolveBaseUrl(): string
     {
-        return 'https://api.smartproxy.cn';
+        return 'https://proxy.stormip.cn';
     }
 
     protected function getExtractIpRequestClass(): ?string
@@ -28,14 +31,13 @@ class SmartProxyConnector extends ProxyConnector
 
     public function withCountry(string $country): self
     {
-        $this->config->add('area', strtoupper($country));
+        $this->config->add('area', $country);
         return $this;
     }
 
-    public function withLifetime(int|string $lifetime): ProxyConnector
+    public function withLifetime(int|string $lifetime): self
     {
         $this->config->add('life', $lifetime);
         return $this;
     }
-
 }

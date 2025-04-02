@@ -1,10 +1,9 @@
 <?php
 
-namespace Weijiajia\HttpProxyManager\Drivers\Storm\Request;
+namespace Weijiajia\HttpProxyManager\Drivers\StormProxies\Request;
 
 use Weijiajia\HttpProxyManager\DirectConnectionIpRequest;
 use Weijiajia\HttpProxyManager\ProxyFormat;
-use Illuminate\Support\Arr;
 class DirectConnectionIp extends DirectConnectionIpRequest
 {
     protected ProxyFormat $proxyFormat = ProxyFormat::USER_PASS_AT_HOST_PORT;
@@ -29,4 +28,7 @@ class DirectConnectionIp extends DirectConnectionIpRequest
         }
         return $this->options['username'];
     }
+
+
+    
 }
