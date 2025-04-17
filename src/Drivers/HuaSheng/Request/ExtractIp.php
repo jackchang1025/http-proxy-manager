@@ -15,7 +15,7 @@ class ExtractIp extends Request
 
     protected Method $method = Method::GET;
 
-    public function __construct(protected array $options = [])
+    public function __construct(public array $options = [])
     {
     }
 

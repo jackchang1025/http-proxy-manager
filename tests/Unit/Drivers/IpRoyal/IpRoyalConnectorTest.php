@@ -11,13 +11,11 @@ uses()->group('iproyal');
 beforeEach(function () {
     $this->config = [
         'mode' => 'direct_connection_ip',
-        'direct_connection_ip' => [
-            'username' => 'test-user',
+       'username' => 'test-user',
             'password' => 'test-pass',
             'host' => 'geo.iproyal.com',
             'port' => 12321,
             'protocol' => 'http',
-        ]
     ];
     
     $this->connector = new IpRoyalConnector($this->config);
@@ -36,13 +34,11 @@ it('throws exception when trying to extract IPs', function () {
 // 测试直连 IP 功能
 it('creates direct connection IP with basic settings', function () {
     $config = [
-        'direct_connection_ip' => [
-            'username' => 'test-user',
+       'username' => 'test-user',
             'password' => 'test-pass',
             'host' => 'geo.iproyal.com',
             'port' => 12321,
             'protocol' => 'http'
-        ]
     ];
 
     $connector = new IpRoyalConnector($config);
@@ -167,13 +163,11 @@ it('creates direct connection IP with multiple options', function () {
 // 测试自定义协议
 it('creates direct connection IP with socks5 protocol', function () {
     $config = [
-        'direct_connection_ip' => [
-            'username' => 'test-user',
+       'username' => 'test-user',
             'password' => 'test-pass',
             'host' => 'geo.iproyal.com',
             'port' => 12321,
             'protocol' => 'socks5'
-        ]
     ];
     
     $connector = new IpRoyalConnector($config);

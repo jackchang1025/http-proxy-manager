@@ -15,18 +15,21 @@ use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Faking\MockClient;
+
+
+
 class ProxyConnectorTestExtractIpRequest extends Request
 {
     protected Method $method = Method::GET;
     
     public function __construct(
-        protected array $options = [
+        array $options = [
             'api_key' => 'test_key',
             'count' => 1,
             'country' => 'cn'
         ]
     ) {
-
+        parent::__construct($options);
     }
     
     public function resolveEndpoint(): string
@@ -262,13 +265,11 @@ it('handles proxy exceptions properly', function () {
 it('correctly merges config params for direct connection IP', function () {
     // 设置初始配置
     $config = [
-        'direct_connection_ip' => [
-            'host' => 'default.example.com',
+        'host' => 'default.example.com',
             'port' => 1234,
             'username' => 'default_user',
             'password' => 'default_pass',
             'protocol' => 'http',
-        ]
     ];
     
     // 创建连接器

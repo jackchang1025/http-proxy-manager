@@ -18,8 +18,10 @@ abstract class DirectConnectionIpRequest extends Request
 
 
     public function __construct(
-        public array $options = [],
+         array $options = [],
     ) {
+
+        parent::__construct($options);
 
         if(empty($this->options['host'])){
             throw new \InvalidArgumentException('host 不能为空');

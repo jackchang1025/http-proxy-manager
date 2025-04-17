@@ -10,5 +10,18 @@ abstract class Request extends SaloonRequest implements RequestContract
 {
     use AcceptsJson;
 
+    public function __construct(
+        public array $options = []
+     ) {}
+
+     /**
+     * 获取请求配置选项
+     * 
+     * @return array
+     */
+    public function getOptions(): array
+    {
+        return $this->options;
+    }
     
 }

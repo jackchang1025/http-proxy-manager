@@ -11,12 +11,7 @@ use Saloon\Enums\Method;
 
 class ExtractIp extends Request
 {
-
     protected Method $method = Method::GET;
-
-    public function __construct(
-       public array $options = []
-    ) {}
 
     public function resolveEndpoint(): string
     {

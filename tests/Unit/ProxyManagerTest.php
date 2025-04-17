@@ -149,3 +149,52 @@ it('使用不存在的驱动时抛出异常', function () {
     $this->proxyManager->driver('non-existent-driver');
 })->throws(\InvalidArgumentException::class);
 
+// 测试链式调用设置代理参数
+it('可以通过链式调用设置代理参数', function () {
+    // 创建测试数据
+    $mockConnector = Mockery::mock(ProxyConnector::class);
+    $mockProxy = new Proxy(
+        'proxy.example.com',
+        8080,
+        'http',
+        'user',
+        'pass'
+    );
+    
+    // 定义模拟行为
+    $this->proxyManager->shouldReceive('connector')
+        ->withNoArgs()
+        ->once()
+        ->andReturn($mockConnector);
+    
+    // 模拟链式调用方法
+    $mockConnector->shouldReceive('withSession')
+        ->with('test')
+        ->once()
+        ->andReturnSelf();
+        
+    $mockConnector->shouldReceive('withCountry')
+        ->with('test')
+        ->once()
+        ->andReturnSelf();
+    
+    $mockConnector->shouldReceive('directConnectionIp')
+        ->withNoArgs()
+        ->once()
+        ->andReturn($mockProxy);
+    
+    // 执行测试
+    $connector = $this->proxyManager->connector();
+    $connector->withSession('test');
+    $connector->withCountry('test');
+    $proxy = $connector->directConnectionIp();
+    
+    // 验证结果
+    expect($proxy)
+        ->toBeInstanceOf(Proxy::class)
+        ->and($proxy->getHost())->toBe('proxy.example.com')
+        ->and($proxy->getPort())->toBe(8080);
+});
+
+
+
