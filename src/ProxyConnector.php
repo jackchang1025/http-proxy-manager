@@ -12,7 +12,7 @@ use Weijiajia\SaloonphpLogsPlugin\Contracts\HasLoggerInterface;
 use Weijiajia\HttpProxyManager\Exception\ProxyModelNotFoundException;
 use Weijiajia\HttpProxyManager\Exception\ProxyException;
 use Weijiajia\HttpProxyManager\Trait\HasOptions;
-use Illuminate\Support\Traits\Conditionable;
+use Saloon\Traits\Conditionable;
 
 abstract class ProxyConnector extends Connector implements HasLoggerInterface
 {
