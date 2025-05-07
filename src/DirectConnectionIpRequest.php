@@ -155,7 +155,7 @@ abstract class DirectConnectionIpRequest extends Request
 
     public function generateSessionId(int $length = 20): string
     {
-        return bin2hex(random_bytes($length / 2));
+        return bin2hex(random_bytes(max(1, (int)ceil($length / 2))));
     }
 
     public function generateString(array $options,array|string $separator = "_"): string
