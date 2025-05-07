@@ -25,7 +25,16 @@ class DirectConnectionIp extends DirectConnectionIpRequest
 
     public function getUsername(): string
     {
-        if($generateString = $this->generateString($this->options,'-')){
+        $options = $this->options;
+
+        if(isset($options['sticky_session'])){
+            unset($options['sticky_session']);
+        }
+        if(isset($options['mode'])){
+            unset($options['mode']);
+        }
+        
+        if($generateString = $this->generateString($options,'-')){
             return "user-".$this->options['username'].'-'.$generateString;
         }
         return "user-".$this->options['username'];

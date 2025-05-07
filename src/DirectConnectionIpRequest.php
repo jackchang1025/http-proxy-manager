@@ -144,7 +144,7 @@ abstract class DirectConnectionIpRequest extends Request
         return Proxy::from([
             'host'     => $data['host'] ?? null,
             'port'     => $data['port'] ?? null,
-            'username'     => $data['username'] ?? null,
+            'username' => $data['username'] ?? null,
             'password' => $data['password'] ?? null,
             'url'      => $data['url'] ?? null,
             'protocol' => $data['protocol'] ?? null,
@@ -153,9 +153,8 @@ abstract class DirectConnectionIpRequest extends Request
        ]);
     }
 
-    public function generateSessionId(int $length = 8): string
+    public function generateSessionId(int $length = 20): string
     {
-        // 生成安全的随机字符串
         return bin2hex(random_bytes($length / 2));
     }
 

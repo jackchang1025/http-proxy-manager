@@ -136,7 +136,7 @@ return [
             'password'        => null,     // 密码
             'session'         => null,     // 会话ID
             'sticky_session'  => false,    // 粘性会话
-            'life'            => 10,       // 生命周期/分钟
+            'sessionduration'            => 10,       // 生命周期/分钟
             'country'         => null,     // 国家
             'city'            => null,     // 城市
             'state'           => null,     // 州/省
