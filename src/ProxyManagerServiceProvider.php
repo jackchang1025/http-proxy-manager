@@ -30,7 +30,7 @@ class ProxyManagerServiceProvider extends ServiceProvider
     protected function registerConfig(): void
     {
 
-        $configPath = __DIR__ . '/config.php';
+        $configPath = __DIR__ . '/config/config.php';
     
         $this->publishes([
             $configPath => config_path('http-proxy-manager.php'),

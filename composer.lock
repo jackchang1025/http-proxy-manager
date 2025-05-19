@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b3fff2c4a8f29b68f5b5c1d89f735815",
+    "content-hash": "c46af9d293453433169847b6fde4ac92",
     "packages": [
         {
             "name": "brick/math",
@@ -2383,6 +2383,81 @@
                 }
             ],
             "time": "2024-11-21T10:39:51+00:00"
+        },
+        {
+            "name": "overtrue/pinyin",
+            "version": "5.3.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/overtrue/pinyin.git",
+                "reference": "03d8697763c32595f54c855911bc77abf00fea14"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/overtrue/pinyin/zipball/03d8697763c32595f54c855911bc77abf00fea14",
+                "reference": "03d8697763c32595f54c855911bc77abf00fea14",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.2"
+            },
+            "require-dev": {
+                "brainmaestro/composer-git-hooks": "^3.0",
+                "friendsofphp/php-cs-fixer": "^3.2",
+                "laravel/pint": "^1.10",
+                "nunomaduro/termwind": "^1.0|^2.0",
+                "phpunit/phpunit": "^10.0|^11.2"
+            },
+            "bin": [
+                "bin/pinyin"
+            ],
+            "type": "library",
+            "extra": {
+                "hooks": {
+                    "pre-push": [
+                        "composer pint",
+                        "composer test"
+                    ],
+                    "pre-commit": [
+                        "composer pint",
+                        "composer test"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Overtrue\\Pinyin\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "overtrue",
+                    "email": "anzhengchao@gmail.com",
+                    "homepage": "http://github.com/overtrue"
+                }
+            ],
+            "description": "Chinese to pinyin translator.",
+            "homepage": "https://github.com/overtrue/pinyin",
+            "keywords": [
+                "Chinese",
+                "Pinyin",
+                "cn2pinyin"
+            ],
+            "support": {
+                "issues": "https://github.com/overtrue/pinyin/issues",
+                "source": "https://github.com/overtrue/pinyin/tree/5.3.4"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/overtrue",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-03-16T02:16:27+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -5662,6 +5737,60 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "weijiajia/province-city-china",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jackchang1025/province-city-china.git",
+                "reference": "73ef2b0e885f3bc03f6bce5f1925ff822427ba7f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jackchang1025/province-city-china/zipball/73ef2b0e885f3bc03f6bce5f1925ff822427ba7f",
+                "reference": "73ef2b0e885f3bc03f6bce5f1925ff822427ba7f",
+                "shasum": ""
+            },
+            "require": {
+                "overtrue/pinyin": "^5.3",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "pestphp/pest": "^3.8"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Weijiajia\\ProvinceCityChina\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Wei Jiajia",
+                    "email": "example@example.com"
+                }
+            ],
+            "description": "中国省市区数据包，支持按拼音和首字母查询",
+            "homepage": "https://github.com/weijiajia/province-city-china",
+            "keywords": [
+                "China",
+                "Pinyin",
+                "administrative-divisions",
+                "area",
+                "city",
+                "province"
+            ],
+            "support": {
+                "issues": "https://github.com/jackchang1025/province-city-china/issues",
+                "source": "https://github.com/jackchang1025/province-city-china/tree/main"
+            },
+            "time": "2025-05-19T12:06:16+00:00"
         },
         {
             "name": "weijiajia/saloonphp-logs-plugin",
@@ -9562,6 +9691,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "weijiajia/province-city-china": 20,
         "weijiajia/saloonphp-logs-plugin": 20
     },
     "prefer-stable": true,
@@ -9569,6 +9699,6 @@
     "platform": {
         "php": "^8.1"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }
