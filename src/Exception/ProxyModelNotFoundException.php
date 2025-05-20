@@ -2,8 +2,4 @@
 
 namespace Weijiajia\HttpProxyManager\Exception;
 
-
-class ProxyModelNotFoundException extends \Exception
-{
-    
-}
+class ProxyModelNotFoundException extends \Exception {}

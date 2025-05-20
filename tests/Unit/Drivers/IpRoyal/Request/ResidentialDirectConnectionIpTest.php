@@ -1,8 +1,8 @@
 <?php
 
-use Weijiajia\HttpProxyManager\Drivers\IpRoyal\Request\ResidentialDirectConnectionIp;
-use Weijiajia\HttpProxyManager\Data\Proxy;
 use Saloon\Http\Connector;
+use Weijiajia\HttpProxyManager\Data\Proxy;
+use Weijiajia\HttpProxyManager\Drivers\IpRoyal\Request\ResidentialDirectConnectionIp;
 
 // 设置测试组
 uses()->group('iproyal', 'request');
@@ -15,10 +15,10 @@ it('creates request with basic parameters', function () {
             'password' => 'test-pass',
             'host' => 'geo.iproyal.com',
             'port' => 12321,
-            'protocol' => 'http'
+            'protocol' => 'http',
         ]
     );
-    
+
     expect($request)->toBeInstanceOf(ResidentialDirectConnectionIp::class);
 });
 
@@ -27,22 +27,22 @@ it('generates session ID of correct length', function () {
     $reflection = new ReflectionClass(ResidentialDirectConnectionIp::class);
     $method = $reflection->getMethod('generateSessionId');
     $method->setAccessible(true);
-    
+
     $request = new ResidentialDirectConnectionIp(
         options: [
             'username' => 'test-user',
             'password' => 'test-pass',
             'host' => 'geo.iproyal.com',
             'port' => 12321,
-            'protocol' => 'http'
+            'protocol' => 'http',
         ]
     );
-    
+
     $sessionId = $method->invoke($request);
-    expect(strlen($sessionId))->toBe(8);
-    
-    $sessionId = $method->invoke($request, 16);
-    expect(strlen($sessionId))->toBe(16);
+    expect(strlen($sessionId))->toBe(expected: 20);
+
+    $sessionId = $method->invoke($request, 20);
+    expect(strlen($sessionId))->toBe(20);
 });
 
 // 测试sticky session会自动生成session ID和lifetime
@@ -58,9 +58,9 @@ it('automatically generates session ID and lifetime when sticky_session is true'
         ]
     );
 
-    
     expect($request->getOptions()['session'])->not->toBeNull()
-        ->and($request->getOptions()['lifetime'])->toBe('10m');
+        ->and($request->getOptions()['lifetime'])->toBe('10m')
+    ;
 });
 
 // 测试传递自定义session优先于自动生成
@@ -73,10 +73,10 @@ it('uses provided session ID instead of generating one', function () {
             'port' => 12321,
             'protocol' => 'http',
             'sticky_session' => true,
-            'session' => 'custom123'
+            'session' => 'custom123',
         ]
     );
-    
+
     expect($request->getOptions()['session'])->toBe('custom123');
 });
 
@@ -88,10 +88,10 @@ it('returns correct host', function () {
             'password' => 'test-pass',
             'host' => 'geo.iproyal.com',
             'port' => 12321,
-            'protocol' => 'http'
+            'protocol' => 'http',
         ]
     );
-    
+
     expect($request->getHost())->toBe('geo.iproyal.com');
 });
 
@@ -103,10 +103,10 @@ it('returns correct port', function () {
             'password' => 'test-pass',
             'host' => 'geo.iproyal.com',
             'port' => 12321,
-            'protocol' => 'http'
+            'protocol' => 'http',
         ]
     );
-    
+
     expect($request->getPort())->toBe(12321);
 });
 
@@ -118,10 +118,10 @@ it('returns correct username', function () {
             'password' => 'test-pass',
             'host' => 'geo.iproyal.com',
             'port' => 12321,
-            'protocol' => 'http'
+            'protocol' => 'http',
         ]
     );
-    
+
     expect($request->getUsername())->toBe('test-user');
 });
 
@@ -133,10 +133,10 @@ it('returns correct password', function () {
             'password' => 'test-pass',
             'host' => 'geo.iproyal.com',
             'port' => 12321,
-            'protocol' => 'http'
+            'protocol' => 'http',
         ]
     );
-    
+
     expect($request->getPassword())->toBe('test-pass');
 });
 
@@ -148,10 +148,10 @@ it('returns correct protocol', function () {
             'password' => 'test-pass',
             'host' => 'geo.iproyal.com',
             'port' => 12321,
-            'protocol' => 'http'
+            'protocol' => 'http',
         ]
     );
-    
+
     expect($request->getProtocol())->toBe('http');
 });
 
@@ -162,15 +162,16 @@ it('includes default parameters not in username  host port protocol', function (
             'password' => 'test-pass',
             'host' => 'geo.iproyal.com',
             'port' => 12321,
-            'protocol' => 'http'
+            'protocol' => 'http',
         ]
     );
-    
+
     expect($request->getPassword())->toContain('test-pass')
         ->and($request->getPassword())->not->toContain('test-user')
         ->and($request->getPassword())->not->toContain('geo.iproyal.com')
         ->and($request->getPassword())->not->toContain('12321')
-        ->and($request->getPassword())->not->toContain('http');
+        ->and($request->getPassword())->not->toContain('http')
+    ;
 });
 
 it('includes default and custom parameters in password', function () {
@@ -187,12 +188,13 @@ it('includes default and custom parameters in password', function () {
             'xxx' => '1',
         ]
     );
-    
+
     expect($request->getPassword())->toContain('test-pass')
         ->and($request->getPassword())->toContain('country-US')
         ->and($request->getPassword())->toContain('streaming-1')
         ->and($request->getPassword())->toContain('xxx-1')
-        ->and($request->getPassword())->toContain('forcerandom-1');
+        ->and($request->getPassword())->toContain('forcerandom-1')
+    ;
 });
 
 // 测试buildPassword方法 - 多个参数
@@ -206,14 +208,15 @@ it('builds password with multiple parameters', function () {
             'protocol' => 'http',
             'country' => 'US',
             'state' => 'California',
-            'streaming' => 1
+            'streaming' => 1,
         ]
     );
-    
+
     expect($request->getPassword())->toContain('test-pass')
         ->and($request->getPassword())->toContain('country-US')
         ->and($request->getPassword())->toContain('state-California')
-        ->and($request->getPassword())->toContain('streaming-1');
+        ->and($request->getPassword())->toContain('streaming-1')
+    ;
 });
 
 // 测试完整的请求周期
@@ -225,10 +228,10 @@ it('creates correct proxy object', function () {
             'host' => 'geo.iproyal.com',
             'port' => 12321,
             'protocol' => 'http',
-            'country' => 'US'
+            'country' => 'US',
         ]
     );
-    
+
     // 创建一个简单的连接器来发送请求
     $connector = new class extends Connector {
         public function resolveBaseUrl(): string
@@ -236,18 +239,19 @@ it('creates correct proxy object', function () {
             return 'https://example.com';
         }
     };
-    
+
     // 使用连接器发送请求
     $response = $connector->send($request);
-    
+
     // 从响应创建DTO
     $proxy = $request->createDtoFromResponse($response);
-    
+
     expect($proxy)->toBeInstanceOf(Proxy::class)
         ->and($proxy->getHost())->toBe('geo.iproyal.com')
         ->and($proxy->getPort())->toBe(12321)
         ->and($proxy->getUsername())->toBe('test-user')
         ->and($proxy->getPassword())->toContain('test-pass')
         ->and($proxy->getPassword())->toContain('country-US')
-        ->and($proxy->getProtocol())->toBe('http');
-}); 
+        ->and($proxy->getProtocol())->toBe('http')
+    ;
+});

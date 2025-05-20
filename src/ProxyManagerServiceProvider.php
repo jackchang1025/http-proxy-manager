@@ -6,7 +6,6 @@ use Illuminate\Support\ServiceProvider;
 
 class ProxyManagerServiceProvider extends ServiceProvider
 {
-
     /**
      * Boot the application events.
      */
@@ -18,25 +17,19 @@ class ProxyManagerServiceProvider extends ServiceProvider
     /**
      * Register the service provider.
      */
-    public function register(): void
-    {
-       
-    }
-
+    public function register(): void {}
 
     /**
      * Register config.
      */
     protected function registerConfig(): void
     {
+        $configPath = __DIR__.'/config/config.php';
 
-        $configPath = __DIR__ . '/config/config.php';
-    
         $this->publishes([
             $configPath => config_path('http-proxy-manager.php'),
         ], 'config');
-    
+
         $this->mergeConfigFrom($configPath, 'http-proxy-manager');
     }
-  
 }

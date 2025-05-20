@@ -2,13 +2,13 @@
 
 namespace Weijiajia\HttpProxyManager;
 
-use Saloon\Http\PendingRequest;
-use Saloon\Http\Faking\MockClient;
-use Saloon\Http\Faking\MockResponse; 
+use Illuminate\Support\Arr;
 use Saloon\Enums\Method;
+use Saloon\Http\Faking\MockClient;
+use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\PendingRequest;
 use Saloon\Http\Response;
 use Weijiajia\HttpProxyManager\Data\Proxy;
-use Illuminate\Support\Arr;
 
 abstract class DirectConnectionIpRequest extends Request
 {
@@ -16,39 +16,35 @@ abstract class DirectConnectionIpRequest extends Request
 
     protected Method $method = Method::GET;
 
-
     public function __construct(
-         array $options = [],
+        array $options = [],
     ) {
-
         parent::__construct($options);
 
-        if(empty($this->options['host'])){
+        if (empty($this->options['host'])) {
             throw new \InvalidArgumentException('host 不能为空');
         }
 
-        if(empty($this->options['port'])){
+        if (empty($this->options['port'])) {
             throw new \InvalidArgumentException('port 不能为空');
         }
 
-        if(empty($this->options['username'])){
+        if (empty($this->options['username'])) {
             throw new \InvalidArgumentException('username 不能为空');
         }
 
-        if(empty($this->options['password'])){
+        if (empty($this->options['password'])) {
             throw new \InvalidArgumentException('password 不能为空');
         }
 
-        if(empty($this->options['protocol'])){
+        if (empty($this->options['protocol'])) {
             throw new \InvalidArgumentException('protocol 不能为空');
         }
 
         if (!in_array($this->options['protocol'], ['http', 'socks5'])) {
             throw new \InvalidArgumentException("不支持的协议类型: {$this->options['protocol']}");
         }
-
     }
-
 
     public function resolveEndpoint(): string
     {
@@ -57,43 +53,45 @@ abstract class DirectConnectionIpRequest extends Request
 
     public function getHost(): string
     {
-        return $this->options['host'];
+        return (string) ($this->options['host'] ?? '');
     }
-    
+
     /**
-     * 获取代理端口
+     * 获取代理端口.
      */
     public function getPort(): int
     {
-        return $this->options['port'];
+        return (int) ($this->options['port'] ?? 0);
     }
-    
+
     /**
-     * 获取代理用户名
+     * 获取代理用户名.
      */
     public function getUsername(): string
     {
-        return $this->options['username'];
+        return (string) ($this->options['username'] ?? '');
     }
-    
+
     /**
      * 获取代理密码
      */
     public function getPassword(): string
     {
-        return $this->options['password'];
-    }
-    
-    /**
-     * 获取代理协议 (http, https, socks5)
-     */
-    public function getProtocol(): string
-    {
-        return $this->options['protocol'];
+        return (string) ($this->options['password'] ?? '');
     }
 
     /**
-     * 获取自定义参数
+     * 获取代理协议 (http, https, socks5).
+     */
+    public function getProtocol(): string
+    {
+        return (string) ($this->options['protocol'] ?? '');
+    }
+
+    /**
+     * 获取自定义参数.
+     *
+     * @return array<string, mixed>
      */
     public function getOptions(): array
     {
@@ -101,14 +99,17 @@ abstract class DirectConnectionIpRequest extends Request
     }
 
     /**
-     * 设置自定义参数
+     * 设置代理配置.
+     *
+     * @param array<string, mixed> $options
      */
     public function setOptions(array $options): self
     {
         $this->options = $options;
+
         return $this;
     }
-    
+
     public function boot(PendingRequest $pendingRequest): void
     {
         // 获取所有必要参数
@@ -117,11 +118,10 @@ abstract class DirectConnectionIpRequest extends Request
         $username = $this->getUsername();
         $password = $this->getPassword();
         $protocol = $this->getProtocol();
-        
-        
+
         // 构建代理URL
         $proxyUrl = $this->proxyFormat->builder($protocol, $host, $port, $username, $password);
-        
+
         // 创建模拟响应
         $mockClient = new MockClient([
             get_class($this) => MockResponse::make(body: [
@@ -133,7 +133,7 @@ abstract class DirectConnectionIpRequest extends Request
                 'url' => $proxyUrl,
             ]),
         ]);
-        
+
         $pendingRequest->withMockClient($mockClient);
     }
 
@@ -142,40 +142,39 @@ abstract class DirectConnectionIpRequest extends Request
         $data = $response->json();
 
         return Proxy::from([
-            'host'     => $data['host'] ?? null,
-            'port'     => $data['port'] ?? null,
+            'host' => $data['host'] ?? '',
+            'port' => $data['port'] ?? 80,
             'username' => $data['username'] ?? null,
             'password' => $data['password'] ?? null,
-            'url'      => $data['url'] ?? null,
-            'protocol' => $data['protocol'] ?? null,
+            'url' => $data['url'] ?? '',
+            'protocol' => $data['protocol'] ?? 'http',
             'expiresAt' => $data['expiresAt'] ?? null,
             'metadata' => $data['metadata'] ?? [],
-       ]);
+        ]);
     }
 
     public function generateSessionId(int $length = 20): string
     {
-        return bin2hex(random_bytes(max(1, (int)ceil($length / 2))));
+        return bin2hex(random_bytes(max(1, (int) ceil($length / 2))));
     }
 
-    public function generateString(array $options,array|string $separator = "_"): string
+    public function generateString(array $options, array|string $separator = '_'): string
     {
         $options = Arr::except($options, ['username', 'password', 'host', 'port', 'protocol']);
 
-        $options = array_filter($options, fn($value) => !is_null($value) && $value !== false && $value !== '');
+        $options = array_filter($options, fn ($value) => !is_null($value) && false !== $value && '' !== $value);
 
-        if(empty($options)){
+        if (empty($options)) {
             return '';
         }
 
         $paramStrings = [];
         foreach ($options as $key => $value) {
-
-            if(is_array($value)){
+            if (is_array($value)) {
                 $value = implode(',', $value);
             }
 
-            if(is_bool($value)){
+            if (is_bool($value)) {
                 $value = (int) $value;
             }
 

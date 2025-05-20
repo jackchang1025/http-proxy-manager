@@ -2,10 +2,10 @@
 
 namespace Weijiajia\HttpProxyManager\Drivers\StormProxies;
 
-use Weijiajia\HttpProxyManager\ProxyConnector;
 use Saloon\Traits\Plugins\AcceptsJson;
-use Weijiajia\HttpProxyManager\Drivers\StormProxies\Request\ExtractIp;
 use Weijiajia\HttpProxyManager\Drivers\StormProxies\Request\DirectConnectionIp;
+use Weijiajia\HttpProxyManager\Drivers\StormProxies\Request\ExtractIp;
+use Weijiajia\HttpProxyManager\ProxyConnector;
 
 class StormProxiesConnector extends ProxyConnector
 {
@@ -19,6 +19,20 @@ class StormProxiesConnector extends ProxyConnector
         return 'https://proxy.stormip.cn';
     }
 
+    public function withCountry(string $country): self
+    {
+        $this->config->add('area', $country);
+
+        return $this;
+    }
+
+    public function withLifetime(int|string $lifetime): self
+    {
+        $this->config->add('life', $lifetime);
+
+        return $this;
+    }
+
     protected function getExtractIpRequestClass(): ?string
     {
         return ExtractIp::class;
@@ -27,17 +41,5 @@ class StormProxiesConnector extends ProxyConnector
     protected function getDirectConnectionIpRequestClass(): ?string
     {
         return DirectConnectionIp::class;
-    }
-
-    public function withCountry(string $country): self
-    {
-        $this->config->add('area', $country);
-        return $this;
-    }
-
-    public function withLifetime(int|string $lifetime): self
-    {
-        $this->config->add('life', $lifetime);
-        return $this;
     }
 }

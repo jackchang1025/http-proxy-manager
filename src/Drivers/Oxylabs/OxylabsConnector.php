@@ -2,9 +2,8 @@
 
 namespace Weijiajia\HttpProxyManager\Drivers\Oxylabs;
 
-use Weijiajia\HttpProxyManager\ProxyConnector;
 use Weijiajia\HttpProxyManager\Drivers\Oxylabs\Request\DirectConnectionIp;
-
+use Weijiajia\HttpProxyManager\ProxyConnector;
 
 class OxylabsConnector extends ProxyConnector
 {

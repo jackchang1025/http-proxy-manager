@@ -1,5 +1,9 @@
 <?php
 
+use Orchestra\Testbench\TestCase;
+use Weijiajia\HttpProxyManager\Data\Proxy;
+use Weijiajia\HttpProxyManager\ProxyManagerServiceProvider;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -11,8 +15,8 @@
 |
 */
 
-// 使用Orchestra TestCase作为基础测试类 
-uses(Orchestra\Testbench\TestCase::class)->in('Feature');
+// 使用Orchestra TestCase作为基础测试类
+uses(TestCase::class)->in('Feature');
 
 /*
 |--------------------------------------------------------------------------
@@ -41,10 +45,10 @@ expect()->extend('toBeOne', function () {
 */
 
 /**
- * 创建用于测试的代理实例
+ * 创建用于测试的代理实例.
  */
 // 设置测试辅助函数
-function makeProxy(array $attributes = []): Weijiajia\HttpProxyManager\Data\Proxy
+function makeProxy(array $attributes = []): Proxy
 {
     $defaults = [
         'host' => '192.168.1.1',
@@ -54,12 +58,12 @@ function makeProxy(array $attributes = []): Weijiajia\HttpProxyManager\Data\Prox
         'password' => null,
         'url' => null,
         'expiresAt' => null,
-        'metadata' => []
+        'metadata' => [],
     ];
 
     $data = array_merge($defaults, $attributes);
 
-    return new Weijiajia\HttpProxyManager\Data\Proxy(
+    return new Proxy(
         $data['host'],
         $data['port'],
         $data['protocol'],
@@ -70,24 +74,29 @@ function makeProxy(array $attributes = []): Weijiajia\HttpProxyManager\Data\Prox
         $data['metadata']
     );
 }
+
 /**
- * 获取测试的包服务提供者
+ * 获取测试的包服务提供者.
+ *
+ * @param mixed $app
  */
 function getPackageProviders($app)
 {
     return [
-        \Weijiajia\HttpProxyManager\ProxyManagerServiceProvider::class,
+        ProxyManagerServiceProvider::class,
     ];
 }
 
 /**
- * 定义环境变量
+ * 定义环境变量.
+ *
+ * @param mixed $app
  */
 function defineEnvironment($app)
 {
     // 设置配置
     $app['config']->set('http-proxy-manager.default', 'huashengdaili');
-    
+
     // 设置华盛代理配置
     $app['config']->set('http-proxy-manager.drivers.huashengdaili', [
         'mode' => 'extract_ip',
@@ -98,7 +107,7 @@ function defineEnvironment($app)
             'type' => 'json',
         ],
     ]);
-    
+
     // 设置IpRoyal配置
     $app['config']->set('http-proxy-manager.drivers.iproyal', [
         'mode' => 'direct_connection_ip',

@@ -2,13 +2,15 @@
 
 namespace Weijiajia\HttpProxyManager\Data;
 
-use DateTime;
 use Weijiajia\HttpProxyManager\Contracts\ProxyInterface;
-use DateTimeInterface;
 
 class Proxy implements ProxyInterface
 {
-
+    /**
+     * Summary of __construct.
+     *
+     * @param array<string,mixed> $metadata
+     */
     public function __construct(
         protected string $host,
         protected int $port,
@@ -16,11 +18,13 @@ class Proxy implements ProxyInterface
         protected ?string $username = null,
         protected ?string $password = null,
         protected ?string $url = null,
-        protected ?DateTimeInterface $expiresAt = null,
+        protected ?\DateTimeInterface $expiresAt = null,
         protected array $metadata = []
-    ) {
-    }
+    ) {}
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return [
@@ -34,10 +38,14 @@ class Proxy implements ProxyInterface
         ];
     }
 
-    public static function from(array $data): static
+    /**
+     * @param array<string, mixed> $data
+     */
+    public static function from(array $data): self
     {
-        return new static(...$data);
+        return new self(...$data);
     }
+
     public function getHost(): string
     {
         return $this->host;
@@ -68,44 +76,49 @@ class Proxy implements ProxyInterface
         return $this->url;
     }
 
-    public function getExpiresAt(): ?DateTimeInterface
+    public function getExpiresAt(): ?\DateTimeInterface
     {
         return $this->expiresAt;
     }
 
     public function isValid(): bool
     {
-        if ($this->expiresAt === null) {
+        if (null === $this->expiresAt) {
             return true;
         }
 
-        return $this->expiresAt > new DateTime();
+        return $this->expiresAt > new \DateTime();
     }
 
     /**
-     * 设置过期时间
+     * 设置过期时间.
      */
-    public function setExpiresAt(?DateTimeInterface $expiresAt): self
+    public function setExpiresAt(?\DateTimeInterface $expiresAt): self
     {
         $this->expiresAt = $expiresAt;
+
         return $this;
     }
 
     /**
-     * 设置元数据
+     * 设置元数据.
+     *
+     * @param array <string, mixed> $metadata
      */
     public function setMetadata(array $metadata): self
     {
         $this->metadata = $metadata;
+
         return $this;
     }
 
     /**
-     * 获取元数据
+     * 获取元数据.
+     *
+     * @return array <string, mixed>
      */
     public function getMetadata(): array
     {
         return $this->metadata;
     }
-
 }

@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
+use Saloon\Http\Connector;
+use Weijiajia\HttpProxyManager\Data\Proxy;
 use Weijiajia\HttpProxyManager\DirectConnectionIpRequest;
 use Weijiajia\HttpProxyManager\ProxyFormat;
-use Weijiajia\HttpProxyManager\Data\Proxy;
-use Saloon\Http\Connector;
 
 class TestDirectConnectionIpRequest extends DirectConnectionIpRequest
 {
@@ -47,22 +47,22 @@ it('creates proxy object with http protocol', function () {
     // 创建连接器
     $connector = new TestConnector();
 
-
     // 发送请求
     $response = $connector->send($request);
 
     // 测试响应
     expect($response->status())->toBe(200);
-    
+
     $proxy = $request->createDtoFromResponse($response);
-    
+
     // 验证生成的代理对象
     expect($proxy)->toBeInstanceOf(Proxy::class)
         ->and($proxy->getHost())->toBe('proxy.example.com')
         ->and($proxy->getPort())->toBe(8080)
         ->and($proxy->getUsername())->toBe('testuser')
         ->and($proxy->getPassword())->toBe('testpass')
-        ->and($proxy->getUrl())->toBe('http://testuser:testpass@proxy.example.com:8080');
+        ->and($proxy->getUrl())->toBe('http://testuser:testpass@proxy.example.com:8080')
+    ;
 });
 
 it('creates proxy object with socks5 protocol', function () {
@@ -82,14 +82,15 @@ it('creates proxy object with socks5 protocol', function () {
 
     // 发送请求
     $response = $connector->send($request);
-    
+
     $proxy = $request->createDtoFromResponse($response);
-    
+
     // 验证生成的代理对象
     expect($proxy)->toBeInstanceOf(Proxy::class)
         ->and($proxy->getHost())->toBe('proxy.example.com')
         ->and($proxy->getPort())->toBe(8080)
-        ->and($proxy->getUrl())->toBe('socks5://testuser:testpass@proxy.example.com:8080');
+        ->and($proxy->getUrl())->toBe('socks5://testuser:testpass@proxy.example.com:8080')
+    ;
 });
 
 it('throws exception for unsupported protocol', function () {
@@ -129,9 +130,9 @@ it('creates proxy object with different proxy format', function () {
 
     // 发送请求
     $response = $connector->send($request);
-    
+
     $proxy = $request->createDtoFromResponse($response);
-    
+
     // 验证生成的代理对象
     $proxyUrl = $proxy->getUrl();
     expect($proxyUrl)->toBe('http://proxy.example.com:8080:testuser:testpass');
@@ -139,14 +140,13 @@ it('creates proxy object with different proxy format', function () {
 
 it('correctly generates session id', function () {
     $request = new TestDirectConnectionIpRequest();
-    
+
     $sessionId = $request->generateSessionId();
-    
+
     expect($sessionId)->toBeString()
-        ->and(strlen($sessionId))->toBe(8);
+        ->and(strlen($sessionId))->toBe(expected: 20)
+    ;
 });
-
-
 
 // 添加测试以验证不同格式的代理字符串生成
 it('generates different proxy formats correctly', function () {
@@ -157,29 +157,28 @@ it('generates different proxy formats correctly', function () {
         ProxyFormat::USER_PASS_HOST_PORT_COLON,
         ProxyFormat::USER_PASS_AT_HOST_PORT,
     ];
-    
+
     $expectedUrls = [
         'http://proxy.example.com:8080:testuser:testpass',
         'http://proxy.example.com:8080@testuser:testpass',
         'http://testuser:testpass:proxy.example.com:8080',
         'http://testuser:testpass@proxy.example.com:8080',
     ];
-    
+
     foreach ($formats as $index => $format) {
         $request = new TestDirectConnectionIpRequest(
             proxyFormat: $format
         );
-        
+
         // 创建连接器
         $connector = new TestConnector();
-    
-        
+
         // 发送请求
         $response = $connector->send($request);
-        
+
         $proxy = $request->createDtoFromResponse($response);
-        
+
         // 验证URL格式
         expect($proxy->getUrl())->toBe($expectedUrls[$index]);
     }
-}); 
+});

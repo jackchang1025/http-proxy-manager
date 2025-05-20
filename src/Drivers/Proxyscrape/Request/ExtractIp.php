@@ -2,12 +2,11 @@
 
 namespace Weijiajia\HttpProxyManager\Drivers\Proxyscrape\Request;
 
-use Weijiajia\HttpProxyManager\Request;
-use Weijiajia\HttpProxyManager\Data\Proxy;
-use Saloon\Http\Response;
 use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
-
+use Saloon\Http\Response;
+use Weijiajia\HttpProxyManager\Data\Proxy;
+use Weijiajia\HttpProxyManager\Request;
 
 class ExtractIp extends Request
 {
@@ -15,7 +14,7 @@ class ExtractIp extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/free-proxy-list/get?'.http_build_query(array_filter($this->options,fn($value) => $value !== null));
+        return '/free-proxy-list/get?'.http_build_query(array_filter($this->options, fn ($value) => null !== $value));
     }
 
     public function createDtoFromResponse(Response $response): Collection
@@ -23,7 +22,7 @@ class ExtractIp extends Request
         $data = $response->json('proxies');
 
         return collect($data)->map(function (array $proxy) {
-            return new Proxy(host: $proxy['ip'], port: $proxy['port'], protocol: $proxy['protocol'],url:$proxy['proxy']);
+            return new Proxy(host: $proxy['ip'], port: $proxy['port'], protocol: $proxy['protocol'], url: $proxy['proxy']);
         });
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Weijiajia\HttpProxyManager\Drivers\Proxyscrape;
 
-use Weijiajia\HttpProxyManager\ProxyConnector;
 use Weijiajia\HttpProxyManager\Drivers\Proxyscrape\Request\ExtractIp;
+use Weijiajia\HttpProxyManager\ProxyConnector;
 
 class ProxyscrapeConnector extends ProxyConnector
 {

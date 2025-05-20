@@ -12,16 +12,13 @@ abstract class Request extends SaloonRequest implements RequestContract
 
     public function __construct(
         public array $options = []
-     ) {}
+    ) {}
 
-     /**
-     * 获取请求配置选项
-     * 
-     * @return array
+    /**
+     * 获取请求配置选项.
      */
     public function getOptions(): array
     {
         return $this->options;
     }
-    
 }

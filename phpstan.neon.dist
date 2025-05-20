@@ -1,0 +1,33 @@
+parameters:
+    # 分析级别（0-9，max = 9）
+    level: 5
+    
+    # 要分析的路径
+    paths:
+        - src
+        - tests
+    
+    # 排除的路径
+    excludePaths:
+        - vendor
+    
+    # 缓存目录
+    tmpDir: var/cache/phpstan
+    
+    # 忽略的错误信息
+    ignoreErrors:
+        # 示例：忽略特定错误信息
+        # - '#Call to an undefined method [a-zA-Z0-9\\_]+::method\(\)#'
+    
+    # 根据路径忽略某些错误
+    # ignoreErrorsWithinFiles:
+    #    - tests/some-directory/*
+
+# 可选：包含其他配置文件或扩展
+# includes:
+#    - vendor/phpstan/phpstan-strict-rules/rules.neon
+#    - vendor/phpstan/phpstan-phpunit/extension.neon
+
+# 可选：自定义规则
+# rules:
+#    - MyNamespace\MyCustomRule

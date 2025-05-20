@@ -14,9 +14,8 @@ class DirectConnectionIp extends DirectConnectionIpRequest
     ) {
         parent::__construct($options);
 
-       if (!empty($this->options['sticky_session']) && $this->options['sticky_session']) {
-
-            if(empty($this->options['session']) || !$this->options['session']){
+        if (!empty($this->options['sticky_session']) && $this->options['sticky_session']) {
+            if (empty($this->options['session']) || !$this->options['session']) {
                 $this->options['session'] = $this->generateSessionId();
 
                 $this->options['life'] ??= 10;
@@ -24,10 +23,12 @@ class DirectConnectionIp extends DirectConnectionIpRequest
         }
     }
 
-    public function getUsername(): string{
-        if($generateString = $this->generateString($this->options)){
+    public function getUsername(): string
+    {
+        if ($generateString = $this->generateString($this->options)) {
             return $this->options['username'].'_'.$generateString;
         }
+
         return $this->options['username'];
     }
 }
