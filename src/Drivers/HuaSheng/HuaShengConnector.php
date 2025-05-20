@@ -49,22 +49,21 @@ class HuaShengConnector extends ProxyConnector
     public function withCity(string $city): self
     {
          // Attempt to find cities by Pinyin
-         $foundCities = Cities::searchByPinyin($city);
+         $foundCities = Cities::make()->getCitiesByPinyin($city);
 
          // If not found by Pinyin, try by province code
-         if (empty($foundCities)) {
-             $foundCities = Cities::getByProvinceCode($city);
+         if ($foundCities->isEmpty()) {
+             $foundCities = Cities::make()->getCitiesByProvinceCode($city);
          }
  
          // If still not found, throw an exception
-         if (empty($foundCities)) {
+         if ($foundCities->isEmpty()) {
              // Using InvalidArgumentException for more specific error type
              // Including the input in the error message for better debugging
              throw new \InvalidArgumentException("City '{$city}' not found or did not yield any results.");
          }
  
-         // Add the area_id from the first city found
-         $this->config->add('city', array_key_first($foundCities));
+         $this->config->add('city', $foundCities->first()->getCode());
         return $this;
     }
 
